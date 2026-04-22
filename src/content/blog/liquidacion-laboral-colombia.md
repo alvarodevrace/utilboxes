@@ -19,4 +19,4 @@ El Código Sustantivo del Trabajo establece que la liquidación debe entregarse 
 Es recomendable que tanto empresas como empleados utilicen herramientas digitales para verificar los montos. La digitalización de la DIAN y el sistema de seguridad social facilitan hoy el acceso a la historia laboral, permitiendo que el cálculo sea transparente y verificado contra los aportes realizados durante el periodo de vigencia del contrato de trabajo.
 
 ## Conclusión
-Estar informado es la mejor herramienta para proteger tus ingresos. No dejes que la burocracia te confunda y utiliza nuestra [Calculadora de Liquidación Laboral Colombia](/calculadora-liquidacion-laboral-colombia) para obtener tus valores reales hoy mismo.
+Estar informado es la mejor herramienta para proteger tus ingresos. No dejes que la burocracia te confunda y explora nuestras [herramientas gratuitas para LatAm](/) para resolver cálculos diarios con más precisión.

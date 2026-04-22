@@ -19,4 +19,4 @@ Dependiendo de tu país de origen y de dónde provenga tu audiencia, es posible 
 No copiar y pegar políticas de otros sitios es una regla de oro. Cada sitio tiene herramientas y proveedores distintos; tu política debe reflejar exactamente lo que TÚ haces con los datos. Un generador confiable te permite personalizar campos como el nombre de tu sitio, correo de contacto y qué servicios de terceros utilizas, asegurando que el documento final sea veraz y útil tanto para el usuario como para las autoridades de protección de datos.
 
 ## Conclusión
-Facilita tu camino hacia la monetización hoy mismo. Si aún no tienes la tuya, consulta nuestra [Política de Privacidad de UtilBoxes](/politica-privacidad) para ver un ejemplo real o usa nuestras herramientas recomendadas para generar la tuya sin costo.
+Facilita tu camino hacia la monetización hoy mismo. Si aún no tienes la tuya, consulta nuestra [Política de Privacidad de UtilBoxes](/privacidad/) para ver un ejemplo real o usa nuestras herramientas recomendadas para generar la tuya sin costo.

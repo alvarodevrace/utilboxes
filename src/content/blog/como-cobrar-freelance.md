@@ -19,4 +19,4 @@ A menudo olvidamos el costo del equipo. Tu computadora tiene una vida útil limi
 En Latinoamérica, la inflación también juega un papel crucial. Un profesional astuto revisa sus tarifas cada seis meses para asegurarse de que su poder adquisitivo no disminuya. Cobrar una tarifa justa también dignifica el mercado local y evita la competencia desleal de precios bajos que termina perjudicando la calidad del servicio ofrecido a los clientes.
 
 ## Conclusión
-Cobrar correctamente te da la libertad de elegir mejores proyectos. Si necesitas ayuda con los números, usa nuestra [Calculadora de Precio Freelance](/cuanto-cobrar-por-hora) para obtener tu tarifa ideal en segundos.
+Cobrar correctamente te da la libertad de elegir mejores proyectos. Si necesitas ayuda con los números, usa nuestra [Calculadora Precio Freelance](/herramientas/precio-freelance/) para obtener tu tarifa ideal en segundos.

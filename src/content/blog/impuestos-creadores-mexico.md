@@ -19,4 +19,4 @@ Aunque el RESICO tiene tasas bajas, no permite deducciones ciegas. Es crucial qu
 Ignorar las obligaciones fiscales puede resultar en multas costosas o incluso el bloqueo de tus cuentas bancarias. La transparencia financiera no solo te da paz mental, sino que también te permite acceder a créditos bancarios y otros beneficios del sistema financiero formal, necesarios para escalar tu producción de contenido y contratar un equipo de apoyo profesional a largo plazo.
 
 ## Conclusión
-La formalidad es el precio del éxito digital sostenido. Si necesitas ayuda con tus cálculos básicos, usa nuestra [Calculadora de Retenciones ISR e IVA](/calculadora-retenciones-mexico) para estar siempre al día con el SAT.
+La formalidad es el precio del éxito digital sostenido. Si necesitas ayuda con tus cálculos básicos, usa nuestra [Calculadora IVA LatAm](/herramientas/calculadora-iva/) y complementa tus revisiones fiscales con asesoría local.

@@ -19,4 +19,4 @@ Los clientes en Ecuador a menudo valoran los paquetes de servicios más que el p
 Asegúrate de siempre solicitar un anticipo del 50% antes de iniciar cualquier proyecto, una práctica estándar en la industria creativa de Guayaquil y Quito. Esto asegura que el cliente esté comprometido con el trabajo y protege tu flujo de caja mensual. La puntualidad en la entrega y un contrato simple de prestación de servicios te posicionarán como un profesional confiable, permitiéndote subir tus precios orgánicamente a medida que tu reputación crezca en el ecosistema freelance local.
 
 ## Conclusión
-Cobrar lo justo es el primer paso para vivir bien del trabajo independiente. Si necesitas ayuda con los cálculos precisos para el mercado local, usa nuestra [Calculadora de Precio Freelance](/cuanto-cobrar-por-hora) ajustando los valores a la realidad del Ecuador.
+Cobrar lo justo es el primer paso para vivir bien del trabajo independiente. Si necesitas ayuda con los cálculos precisos para el mercado local, usa nuestra [Calculadora Precio Freelance](/herramientas/precio-freelance/) ajustando los valores a la realidad del Ecuador.
