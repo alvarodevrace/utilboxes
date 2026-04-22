@@ -1,0 +1,68 @@
+---
+import Layout from '../../components/Layout.astro';
+const title = 'Precio Freelance 2026 | UtilBoxes';
+const description = 'Precio freelance por hora segun gastos, horas facturables, ahorro, impuestos y margen objetivo.';
+---
+<Layout {title} {description}>
+  <section class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
+    <div>
+      <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-emerald-300">Cotizacion freelance</p>
+      <h1 class="mb-4 text-4xl font-bold text-white">Calculadora precio freelance</h1>
+      <p class="mb-8 max-w-2xl text-zinc-400">Define precio por hora y mensualidad objetivo desde costos reales.</p>
+      <div class="rounded-lg border border-zinc-800 bg-zinc-900 p-6">
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="text-sm text-zinc-300">Gastos mensuales
+            <input id="expenses" type="number" min="0" value="900" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white" />
+          </label>
+          <label class="text-sm text-zinc-300">Ingreso deseado
+            <input id="income" type="number" min="0" value="1800" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white" />
+          </label>
+          <label class="text-sm text-zinc-300">Horas facturables/mes
+            <input id="hours" type="number" min="1" value="100" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white" />
+          </label>
+          <label class="text-sm text-zinc-300">Impuestos %
+            <input id="taxRate" type="number" min="0" value="15" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white" />
+          </label>
+          <label class="text-sm text-zinc-300">Ahorro %
+            <input id="saveRate" type="number" min="0" value="10" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white" />
+          </label>
+          <label class="text-sm text-zinc-300">Margen %
+            <input id="marginRate" type="number" min="0" value="20" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white" />
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="rounded-lg border border-zinc-800 bg-zinc-900 p-6">
+      <h2 class="mb-4 text-lg font-semibold text-white">Resultado</h2>
+      <dl class="space-y-4">
+        <div class="flex justify-between gap-4 border-b border-zinc-800 pb-3"><dt class="text-zinc-400">Base mensual</dt><dd id="monthly" class="font-semibold text-white">$0.00</dd></div>
+        <div class="flex justify-between gap-4 border-b border-zinc-800 pb-3"><dt class="text-zinc-400">Precio/hora</dt><dd id="hourly" class="text-xl font-bold text-emerald-300">$0.00</dd></div>
+        <div class="flex justify-between gap-4"><dt class="text-zinc-400">Proyecto 40h</dt><dd id="project" class="font-semibold text-white">$0.00</dd></div>
+      </dl>
+    </div>
+  </section>
+  <script>
+    const fields = ['expenses', 'income', 'hours', 'taxRate', 'saveRate', 'marginRate'].map((id) => document.querySelector(`#${id}`));
+    const monthly = document.querySelector('#monthly');
+    const hourly = document.querySelector('#hourly');
+    const project = document.querySelector('#project');
+    const money = new Intl.NumberFormat('es-EC', { style: 'currency', currency: 'USD' });
+
+    function value(id) {
+      return Number(document.querySelector(`#${id}`).value) || 0;
+    }
+
+    function calculate() {
+      const subtotal = value('expenses') + value('income');
+      const multiplier = 1 + (value('taxRate') + value('saveRate') + value('marginRate')) / 100;
+      const monthlyValue = subtotal * multiplier;
+      const hourlyValue = monthlyValue / Math.max(value('hours'), 1);
+      monthly.textContent = money.format(monthlyValue);
+      hourly.textContent = money.format(hourlyValue);
+      project.textContent = money.format(hourlyValue * 40);
+    }
+
+    fields.forEach((field) => field.addEventListener('input', calculate));
+    calculate();
+  </script>
+</Layout>
