@@ -15,4 +15,4 @@ Si tienes el valor total de una factura y necesitas saber cuál es la base impon
 Es importante recordar que no todo paga el 15%. En Ecuador existen productos de la canasta básica, medicamentos y ciertos servicios que mantienen la tarifa 0%. Conocer estas excepciones te permite llevar una contabilidad más limpia y evitar errores en tus declaraciones mensuales ante el SRI.
 
 ## Conclusión
-Calcular el IVA de forma manual es propenso a errores, especialmente en transacciones múltiples. Si necesitas rapidez, utiliza nuestra [Calculadora de IVA Ecuador 15%](/herramientas/calculadora-iva-ecuador) y obtén el desglose exacto para tus facturas en segundos.
+Calcular el IVA de forma manual es propenso a errores, especialmente en transacciones múltiples. Si necesitas rapidez, utiliza nuestra [Calculadora IVA LatAm](/herramientas/calculadora-iva/) y obtén el desglose exacto para tus facturas en segundos.

@@ -19,4 +19,4 @@ Muchas personas creen que cambiar una vocal por un número (como "H0l4") es sufi
 Otro error frecuente es anotar las contraseñas en archivos de texto sin cifrar o en post-its cerca de la computadora. La mejor práctica es generar la clave, guardarla en un gestor de contraseñas encriptado y nunca compartirla por canales abiertos como chats o correos electrónicos. La seguridad es un hábito, y el primer paso es aceptar que nuestra memoria no es el mejor lugar para almacenar docenas de accesos complejos.
 
 ## Conclusión
-Proteger tu identidad digital es tu responsabilidad. No esperes a que hackeen tus cuentas para actuar. Prueba nuestro [Generador de Contraseñas Seguras](/generador-passwords) en UtilBoxes y duerme tranquilo hoy mismo.
+Proteger tu identidad digital es tu responsabilidad. No esperes a que hackeen tus cuentas para actuar. Prueba nuestro [Generador de Passwords](/herramientas/generador-password/) en UtilBoxes y duerme tranquilo hoy mismo.

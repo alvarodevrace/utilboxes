@@ -19,4 +19,4 @@ Muchos ahorristas utilizan la técnica del "plazo fijo escalonado". Esto consist
 Recuerda que los intereses generados por plazos fijos de personas humanas suelen estar exentos de ciertos impuestos, lo que aumenta la rentabilidad neta comparado con otras inversiones gravadas. Sin embargo, siempre consulta con un asesor contable si tus montos son significativos para asegurar el cumplimiento de las normativas de la AFIP vigentes.
 
 ## Conclusión
-El plazo fijo es una base sólida para tu estrategia financiera. Si quieres saber exactamente cuánto ganarás, usa nuestra [Calculadora de Plazo Fijo Argentina](/calculadora-plazo-fijo-argentina) y toma el control de tu dinero.
+El plazo fijo es una base sólida para tu estrategia financiera. Si quieres ordenar mejor tus números, explora nuestras [herramientas gratuitas para LatAm](/) y toma el control de tu dinero.
