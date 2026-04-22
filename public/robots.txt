@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://utilboxes.org/sitemap-index.xml
