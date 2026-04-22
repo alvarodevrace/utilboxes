@@ -8,6 +8,8 @@ const {
   showTopAd = true,
   showBottomAd = true,
 } = Astro.props;
+
+const plausibleSrc = 'https://analytics.utilboxes.org/js/script.js';
 ---
 <!DOCTYPE html>
 <html lang="es">
@@ -16,7 +18,7 @@ const {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <SEOMeta {title} {description} />
   <link rel="sitemap" href="/sitemap-index.xml" />
-  <script defer data-domain="utilboxes.org" src="https://analytics.utilboxes.org/js/script.js"></script>
+  <script defer data-domain="utilboxes.org" src={plausibleSrc}></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen">
   <header class="border-b border-zinc-800 bg-zinc-950/90 px-6 py-4">
@@ -26,6 +28,7 @@ const {
         <a href="/herramientas/calculadora-iva" class="hover:text-white">IVA</a>
         <a href="/herramientas/generador-password" class="hover:text-white">Password</a>
         <a href="/herramientas/precio-freelance" class="hover:text-white">Freelance</a>
+        <a href="/blog" class="hover:text-white">Blog</a>
       </nav>
     </div>
   </header>
@@ -35,7 +38,7 @@ const {
     {showBottomAd && <AdSlot position="bottom" />}
   </main>
   <footer class="border-t border-zinc-800 px-6 py-6 text-center text-sm text-zinc-500 mt-20">
-    UtilBoxes 2026 · <a href="/privacidad" class="hover:text-zinc-300">Privacidad</a>
+    UtilBoxes 2026 · <a href="/blog" class="hover:text-zinc-300">Blog</a> · <a href="/privacidad" class="hover:text-zinc-300">Privacidad</a>
   </footer>
 </body>
 </html>
