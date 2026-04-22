@@ -45,14 +45,21 @@ services:
         condition: service_healthy
       plausible_events_db:
         condition: service_healthy
-    ports:
-      - "127.0.0.1:8100:8000"
+    expose:
+      - "8000"
     environment:
       BASE_URL: ${PLAUSIBLE_BASE_URL}
       SECRET_KEY_BASE: ${PLAUSIBLE_SECRET_KEY}
       DATABASE_URL: postgres://plausible:${PLAUSIBLE_DB_PASSWORD}@plausible_db:5432/plausible_db
       CLICKHOUSE_DATABASE_URL: http://plausible_events_db:8123/plausible_events
       DISABLE_REGISTRATION: invite_only
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.plausible.rule=Host(`analytics.utilboxes.org`)"
+      - "traefik.http.routers.plausible.entrypoints=https"
+      - "traefik.http.routers.plausible.tls=true"
+      - "traefik.http.routers.plausible.tls.certresolver=letsencrypt"
+      - "traefik.http.services.plausible.loadbalancer.server.port=8000"
 
 volumes:
   plausible_db_data:
