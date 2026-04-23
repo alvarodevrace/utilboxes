@@ -1,0 +1,127 @@
+---
+import Layout from '../../components/Layout.astro';
+
+const title = 'Comisiones Freelance 2026 | UtilBoxes';
+const description = 'Comisiones freelance para calcular neto, fees y precio objetivo con PayPal, Stripe, Wise, Payoneer o custom.';
+---
+<Layout {title} {description}>
+  <section class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
+    <div>
+      <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-emerald-300">Cobro internacional</p>
+      <h1 class="mb-4 text-4xl font-bold text-white">Calculadora de comisiones freelance</h1>
+      <p class="mb-8 max-w-2xl text-zinc-400">Mide cuanto pierdes por porcentaje, fee fijo y tipo de cambio. Tambien estima cuanto debes cobrar para recibir neto objetivo.</p>
+      <div class="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="block text-sm text-zinc-300">
+            Plataforma
+            <select id="platform" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white">
+              <option value="paypal">PayPal</option>
+              <option value="payoneer">Payoneer</option>
+              <option value="wise">Wise</option>
+              <option value="stripe">Stripe</option>
+              <option value="custom">Custom</option>
+            </select>
+          </label>
+          <label class="block text-sm text-zinc-300">
+            Monto cobrado
+            <input id="grossAmount" type="number" min="0" step="0.01" value="1000" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white" />
+          </label>
+          <label class="block text-sm text-zinc-300">
+            Comision %
+            <input id="percentFee" type="number" min="0" step="0.01" value="5.4" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white" />
+          </label>
+          <label class="block text-sm text-zinc-300">
+            Fee fijo
+            <input id="fixedFee" type="number" min="0" step="0.01" value="0.3" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white" />
+          </label>
+          <label class="block text-sm text-zinc-300">
+            Tipo cambio opcional
+            <input id="exchangeRate" type="number" min="0" step="0.0001" value="1" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white" />
+          </label>
+          <label class="block text-sm text-zinc-300">
+            Neto objetivo
+            <input id="targetNet" type="number" min="0" step="0.01" value="900" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white" />
+          </label>
+        </div>
+      </div>
+    </div>
+    <aside class="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
+      <h2 class="mb-4 text-lg font-semibold text-white">Resultados</h2>
+      <dl class="space-y-4">
+        <div class="flex justify-between gap-4 border-b border-zinc-800 pb-3">
+          <dt class="text-zinc-400">Comision total</dt>
+          <dd id="feeTotal" class="font-semibold text-white">$0.00</dd>
+        </div>
+        <div class="flex justify-between gap-4 border-b border-zinc-800 pb-3">
+          <dt class="text-zinc-400">Neto recibido</dt>
+          <dd id="netReceived" class="font-semibold text-emerald-300">$0.00</dd>
+        </div>
+        <div class="flex justify-between gap-4 border-b border-zinc-800 pb-3">
+          <dt class="text-zinc-400">Neto con cambio</dt>
+          <dd id="convertedNet" class="font-semibold text-white">$0.00</dd>
+        </div>
+        <div class="flex justify-between gap-4 border-b border-zinc-800 pb-3">
+          <dt class="text-zinc-400">Cobro recomendado</dt>
+          <dd id="recommendedGross" class="font-semibold text-white">$0.00</dd>
+        </div>
+        <div class="flex justify-between gap-4">
+          <dt class="text-zinc-400">Margen perdido</dt>
+          <dd id="effectiveRate" class="text-xl font-bold text-white">0%</dd>
+        </div>
+      </dl>
+      <p id="platformNote" class="mt-5 rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 text-sm text-zinc-300"></p>
+    </aside>
+  </section>
+  <script>
+    const presets = {
+      paypal: { percent: 5.4, fixed: 0.3, note: 'Preset general para cobro internacional en USD. Ajusta si tu region o plan cambia.' },
+      payoneer: { percent: 3, fixed: 0, note: 'Preset base para recepcion por tarjeta o link. Algunas rutas bancarias cambian fee.' },
+      wise: { percent: 1.1, fixed: 0.5, note: 'Wise suele combinar fee porcentual bajo con fijo pequeno.' },
+      stripe: { percent: 3.6, fixed: 0.3, note: 'Preset cercano a Stripe internacional. Verifica fee local y fee por conversion.' },
+      custom: { percent: 0, fixed: 0, note: 'Define fee propia para marketplace, banco o pasarela local.' },
+    };
+
+    const platform = document.querySelector('#platform');
+    const grossAmount = document.querySelector('#grossAmount');
+    const percentFee = document.querySelector('#percentFee');
+    const fixedFee = document.querySelector('#fixedFee');
+    const exchangeRate = document.querySelector('#exchangeRate');
+    const targetNet = document.querySelector('#targetNet');
+    const feeTotal = document.querySelector('#feeTotal');
+    const netReceived = document.querySelector('#netReceived');
+    const convertedNet = document.querySelector('#convertedNet');
+    const recommendedGross = document.querySelector('#recommendedGross');
+    const effectiveRate = document.querySelector('#effectiveRate');
+    const platformNote = document.querySelector('#platformNote');
+    const money = new Intl.NumberFormat('es-EC', { style: 'currency', currency: 'USD' });
+
+    function syncPreset() {
+      const preset = presets[platform.value];
+      percentFee.value = preset.percent;
+      fixedFee.value = preset.fixed;
+      platformNote.textContent = preset.note;
+      calculate();
+    }
+
+    function calculate() {
+      const gross = Number(grossAmount.value) || 0;
+      const percent = (Number(percentFee.value) || 0) / 100;
+      const fixed = Number(fixedFee.value) || 0;
+      const fx = Number(exchangeRate.value) || 1;
+      const target = Number(targetNet.value) || 0;
+      const fee = gross * percent + fixed;
+      const net = Math.max(gross - fee, 0);
+      const targetGross = percent >= 1 ? 0 : (target + fixed) / (1 - percent);
+
+      feeTotal.textContent = money.format(fee);
+      netReceived.textContent = money.format(net);
+      convertedNet.textContent = money.format(net * fx);
+      recommendedGross.textContent = money.format(targetGross);
+      effectiveRate.textContent = gross > 0 ? `${((fee / gross) * 100).toFixed(2)}%` : '0%';
+    }
+
+    platform.addEventListener('change', syncPreset);
+    [grossAmount, percentFee, fixedFee, exchangeRate, targetNet].forEach((element) => element.addEventListener('input', calculate));
+    syncPreset();
+  </script>
+</Layout>
