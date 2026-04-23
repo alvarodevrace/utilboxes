@@ -3,18 +3,37 @@ import Layout from '../components/Layout.astro';
 import ToolCard from '../components/ToolCard.astro';
 
 const title = 'UtilBoxes 2026 | Herramientas gratis';
-const description = 'Herramientas gratis para calcular IVA, generar passwords y cotizar trabajo freelance en LatAm.';
+const description = 'Herramientas gratis para calcular porcentajes, comisiones, interes compuesto y mas utilidades para LatAm.';
 const tools = [
   { title: 'Calculadora IVA LatAm', description: 'Calcula precio neto, IVA y total por pais en segundos.', href: '/herramientas/calculadora-iva', icon: 'IVA' },
   { title: 'Generador de Passwords', description: 'Crea passwords seguras con largo y caracteres configurables.', href: '/herramientas/generador-password', icon: 'PW' },
   { title: 'Precio Freelance', description: 'Convierte gastos, horas y margen en precio por hora rentable.', href: '/herramientas/precio-freelance', icon: 'USD' },
+  { title: 'Link WhatsApp', description: 'Genera enlaces wa.me con mensaje listo para ventas y soporte.', href: '/herramientas/generador-link-whatsapp', icon: 'WA' },
+  { title: 'Interes Compuesto', description: 'Proyecta capital final, aportes e intereses con tabla anual.', href: '/herramientas/calculadora-interes-compuesto', icon: 'IC' },
+  { title: 'Comisiones Freelance', description: 'Calcula neto real tras PayPal, Wise, Stripe y comisiones custom.', href: '/herramientas/calculadora-comisiones-freelance', icon: 'FX' },
+  { title: 'Conversor de Unidades', description: 'Convierte longitud, peso, temperatura y volumen al instante.', href: '/herramientas/conversor-unidades', icon: 'CV' },
+  { title: 'Calculadora Porcentaje', description: 'Resuelve porcentajes, descuentos, aumentos y regla de tres.', href: '/herramientas/calculadora-porcentaje', icon: '%' },
 ];
 ---
 <Layout {title} {description}>
-  <div class="mb-12 max-w-3xl">
+  <div class="mb-12 max-w-4xl">
     <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-emerald-300">Utilidades web para LatAm</p>
     <h1 class="mb-4 text-4xl font-bold text-white sm:text-5xl">Herramientas gratuitas para trabajo diario</h1>
-    <p class="text-lg leading-8 text-zinc-400">Calculadoras, generadores y utilidades client-side para emprendedores, freelancers y equipos pequenos.</p>
+    <p class="text-lg leading-8 text-zinc-400">Calculadoras, generadores y utilidades client-side para emprendedores, freelancers y equipos pequenos. Ocho herramientas listas para ventas, finanzas y tareas operativas.</p>
+  </div>
+  <div class="mb-8 grid gap-4 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:grid-cols-3">
+    <div>
+      <p class="text-sm uppercase tracking-wide text-emerald-300">Set actual</p>
+      <p class="mt-2 text-2xl font-bold text-white">8 herramientas</p>
+    </div>
+    <div>
+      <p class="text-sm uppercase tracking-wide text-emerald-300">Uso rapido</p>
+      <p class="mt-2 text-zinc-300">Sin login. Sin backend. Resultados al instante.</p>
+    </div>
+    <div>
+      <p class="text-sm uppercase tracking-wide text-emerald-300">Enfoque</p>
+      <p class="mt-2 text-zinc-300">LatAm, monetizacion, conversion y calculo diario.</p>
+    </div>
   </div>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
     {tools.map((tool) => <ToolCard {...tool} />)}

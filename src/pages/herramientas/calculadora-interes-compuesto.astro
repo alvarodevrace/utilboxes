@@ -1,0 +1,142 @@
+---
+import Layout from '../../components/Layout.astro';
+
+const title = 'Interes Compuesto 2026 | UtilBoxes';
+const description = 'Interes compuesto para calcular capital final, aportes e intereses con tabla anual simple y frecuencia flexible.';
+---
+<Layout {title} {description}>
+  <section class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px]">
+    <div>
+      <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-emerald-300">Ahorro e inversion</p>
+      <h1 class="mb-4 text-4xl font-bold text-white">Calculadora de interes compuesto</h1>
+      <p class="mb-8 max-w-2xl text-zinc-400">Proyecta crecimiento de capital con aporte mensual, tasa anual y frecuencia de capitalizacion para tomar decisiones mas claras.</p>
+      <div class="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="block text-sm text-zinc-300">
+            Capital inicial
+            <input id="principal" type="number" min="0" step="0.01" value="1000" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white" />
+          </label>
+          <label class="block text-sm text-zinc-300">
+            Aporte mensual
+            <input id="contribution" type="number" min="0" step="0.01" value="150" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white" />
+          </label>
+          <label class="block text-sm text-zinc-300">
+            Tasa anual %
+            <input id="annualRate" type="number" min="0" step="0.01" value="10" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white" />
+          </label>
+          <label class="block text-sm text-zinc-300">
+            Anos
+            <input id="years" type="number" min="1" step="1" value="10" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white" />
+          </label>
+          <label class="block text-sm text-zinc-300 sm:col-span-2">
+            Frecuencia
+            <select id="frequency" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white">
+              <option value="12">Mensual</option>
+              <option value="4">Trimestral</option>
+              <option value="2">Semestral</option>
+              <option value="1">Anual</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <div class="mt-8 rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
+        <div class="mb-4 flex items-center justify-between gap-4">
+          <h2 class="text-lg font-semibold text-white">Tabla anual</h2>
+          <p class="text-sm text-zinc-500">Resumen simple por ano</p>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-left text-sm">
+            <thead class="text-zinc-500">
+              <tr>
+                <th class="pb-3 pr-4 font-medium">Ano</th>
+                <th class="pb-3 pr-4 font-medium">Aportes</th>
+                <th class="pb-3 pr-4 font-medium">Interes</th>
+                <th class="pb-3 font-medium">Total</th>
+              </tr>
+            </thead>
+            <tbody id="yearRows" class="divide-y divide-zinc-800 text-zinc-300"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <aside class="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
+      <h2 class="mb-4 text-lg font-semibold text-white">Proyeccion</h2>
+      <dl class="space-y-4">
+        <div class="flex justify-between gap-4 border-b border-zinc-800 pb-3">
+          <dt class="text-zinc-400">Capital final</dt>
+          <dd id="finalAmount" class="font-semibold text-emerald-300">$0.00</dd>
+        </div>
+        <div class="flex justify-between gap-4 border-b border-zinc-800 pb-3">
+          <dt class="text-zinc-400">Aportes totales</dt>
+          <dd id="totalContributions" class="font-semibold text-white">$0.00</dd>
+        </div>
+        <div class="flex justify-between gap-4 border-b border-zinc-800 pb-3">
+          <dt class="text-zinc-400">Intereses generados</dt>
+          <dd id="totalInterest" class="font-semibold text-white">$0.00</dd>
+        </div>
+        <div class="flex justify-between gap-4">
+          <dt class="text-zinc-400">Multiplicador</dt>
+          <dd id="multiple" class="text-xl font-bold text-white">0x</dd>
+        </div>
+      </dl>
+    </aside>
+  </section>
+  <script>
+    const principal = document.querySelector('#principal');
+    const contribution = document.querySelector('#contribution');
+    const annualRate = document.querySelector('#annualRate');
+    const years = document.querySelector('#years');
+    const frequency = document.querySelector('#frequency');
+    const finalAmount = document.querySelector('#finalAmount');
+    const totalContributions = document.querySelector('#totalContributions');
+    const totalInterest = document.querySelector('#totalInterest');
+    const multiple = document.querySelector('#multiple');
+    const yearRows = document.querySelector('#yearRows');
+    const money = new Intl.NumberFormat('es-EC', { style: 'currency', currency: 'USD' });
+
+    function calculate() {
+      const start = Number(principal.value) || 0;
+      const monthlyContribution = Number(contribution.value) || 0;
+      const rate = (Number(annualRate.value) || 0) / 100;
+      const yearsValue = Math.max(1, Number(years.value) || 1);
+      const periodsPerYear = Math.max(1, Number(frequency.value) || 1);
+      const monthlyRate = Math.pow(1 + rate / periodsPerYear, periodsPerYear / 12) - 1;
+
+      let balance = start;
+      let invested = start;
+      let interestEarned = 0;
+      let rows = '';
+
+      for (let year = 1; year <= yearsValue; year += 1) {
+        const investedAtYearStart = invested;
+        const interestAtYearStart = interestEarned;
+
+        for (let month = 0; month < 12; month += 1) {
+          balance += monthlyContribution;
+          invested += monthlyContribution;
+          const gain = balance * monthlyRate;
+          balance += gain;
+          interestEarned += gain;
+        }
+
+        rows += `
+          <tr>
+            <td class="py-3 pr-4 font-medium text-white">${year}</td>
+            <td class="py-3 pr-4">${money.format(invested - investedAtYearStart)}</td>
+            <td class="py-3 pr-4">${money.format(interestEarned - interestAtYearStart)}</td>
+            <td class="py-3 font-semibold text-emerald-300">${money.format(balance)}</td>
+          </tr>
+        `;
+      }
+
+      finalAmount.textContent = money.format(balance);
+      totalContributions.textContent = money.format(invested);
+      totalInterest.textContent = money.format(balance - invested);
+      multiple.textContent = invested > 0 ? `${(balance / invested).toFixed(2)}x` : '0x';
+      yearRows.innerHTML = rows;
+    }
+
+    [principal, contribution, annualRate, years, frequency].forEach((element) => element.addEventListener('input', calculate));
+    calculate();
+  </script>
+</Layout>

@@ -1,0 +1,130 @@
+---
+import Layout from '../../components/Layout.astro';
+
+const title = 'Conversor Unidades 2026 | UtilBoxes';
+const description = 'Conversor unidades para pasar longitud, peso, temperatura y volumen con resultado instantaneo y limpio.';
+---
+<Layout {title} {description}>
+  <section class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
+    <div>
+      <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-emerald-300">Conversion rapida</p>
+      <h1 class="mb-4 text-4xl font-bold text-white">Conversor de unidades</h1>
+      <p class="mb-8 max-w-2xl text-zinc-400">Convierte medidas comunes de longitud, peso, temperatura y volumen sin salir de pantalla ni abrir tablas externas.</p>
+      <div class="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="block text-sm text-zinc-300 sm:col-span-2">
+            Categoria
+            <select id="category" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white">
+              <option value="length">Longitud</option>
+              <option value="weight">Peso</option>
+              <option value="temperature">Temperatura</option>
+              <option value="volume">Volumen</option>
+            </select>
+          </label>
+          <label class="block text-sm text-zinc-300">
+            Valor
+            <input id="sourceValue" type="number" step="0.01" value="1" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white" />
+          </label>
+          <div class="hidden sm:block"></div>
+          <label class="block text-sm text-zinc-300">
+            Desde
+            <select id="fromUnit" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white"></select>
+          </label>
+          <label class="block text-sm text-zinc-300">
+            Hacia
+            <select id="toUnit" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white"></select>
+          </label>
+        </div>
+      </div>
+    </div>
+    <aside class="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
+      <h2 class="mb-4 text-lg font-semibold text-white">Resultado</h2>
+      <p id="resultValue" class="text-4xl font-bold text-emerald-300">0</p>
+      <p id="resultText" class="mt-3 text-zinc-300"></p>
+      <button id="swapUnits" type="button" class="mt-6 rounded-md border border-emerald-500/40 px-4 py-2 text-sm font-semibold text-emerald-300 transition hover:border-emerald-400 hover:text-white">Invertir unidades</button>
+    </aside>
+  </section>
+  <script>
+    const definitions = {
+      length: {
+        label: 'Longitud',
+        units: {
+          m: { label: 'Metros', toBase: (value) => value, fromBase: (value) => value },
+          km: { label: 'Kilometros', toBase: (value) => value * 1000, fromBase: (value) => value / 1000 },
+          cm: { label: 'Centimetros', toBase: (value) => value / 100, fromBase: (value) => value * 100 },
+          mi: { label: 'Millas', toBase: (value) => value * 1609.344, fromBase: (value) => value / 1609.344 },
+          ft: { label: 'Pies', toBase: (value) => value * 0.3048, fromBase: (value) => value / 0.3048 },
+        },
+      },
+      weight: {
+        label: 'Peso',
+        units: {
+          kg: { label: 'Kilogramos', toBase: (value) => value, fromBase: (value) => value },
+          g: { label: 'Gramos', toBase: (value) => value / 1000, fromBase: (value) => value * 1000 },
+          lb: { label: 'Libras', toBase: (value) => value * 0.45359237, fromBase: (value) => value / 0.45359237 },
+          oz: { label: 'Onzas', toBase: (value) => value * 0.0283495231, fromBase: (value) => value / 0.0283495231 },
+        },
+      },
+      temperature: {
+        label: 'Temperatura',
+        units: {
+          c: { label: 'Celsius', toBase: (value) => value, fromBase: (value) => value },
+          f: { label: 'Fahrenheit', toBase: (value) => (value - 32) * (5 / 9), fromBase: (value) => value * (9 / 5) + 32 },
+          k: { label: 'Kelvin', toBase: (value) => value - 273.15, fromBase: (value) => value + 273.15 },
+        },
+      },
+      volume: {
+        label: 'Volumen',
+        units: {
+          l: { label: 'Litros', toBase: (value) => value, fromBase: (value) => value },
+          ml: { label: 'Mililitros', toBase: (value) => value / 1000, fromBase: (value) => value * 1000 },
+          gal: { label: 'Galones US', toBase: (value) => value * 3.785411784, fromBase: (value) => value / 3.785411784 },
+          m3: { label: 'Metros cubicos', toBase: (value) => value * 1000, fromBase: (value) => value / 1000 },
+        },
+      },
+    };
+
+    const category = document.querySelector('#category');
+    const sourceValue = document.querySelector('#sourceValue');
+    const fromUnit = document.querySelector('#fromUnit');
+    const toUnit = document.querySelector('#toUnit');
+    const resultValue = document.querySelector('#resultValue');
+    const resultText = document.querySelector('#resultText');
+    const swapUnits = document.querySelector('#swapUnits');
+
+    function populateUnits() {
+      const config = definitions[category.value];
+      const entries = Object.entries(config.units);
+      const options = entries.map(([key, unit]) => `<option value="${key}">${unit.label}</option>`).join('');
+      fromUnit.innerHTML = options;
+      toUnit.innerHTML = options;
+      if (entries[1]) {
+        toUnit.value = entries[1][0];
+      }
+      calculate();
+    }
+
+    function calculate() {
+      const config = definitions[category.value];
+      const value = Number(sourceValue.value) || 0;
+      const from = config.units[fromUnit.value];
+      const to = config.units[toUnit.value];
+      const baseValue = from.toBase(value);
+      const converted = to.fromBase(baseValue);
+
+      resultValue.textContent = Number.isFinite(converted) ? converted.toLocaleString('es-EC', { maximumFractionDigits: 6 }) : '0';
+      resultText.textContent = `${value} ${from.label} equivalen a ${resultValue.textContent} ${to.label}.`;
+    }
+
+    category.addEventListener('change', populateUnits);
+    [sourceValue, fromUnit, toUnit].forEach((element) => element.addEventListener('input', calculate));
+    swapUnits.addEventListener('click', () => {
+      const previous = fromUnit.value;
+      fromUnit.value = toUnit.value;
+      toUnit.value = previous;
+      calculate();
+    });
+
+    populateUnits();
+  </script>
+</Layout>
