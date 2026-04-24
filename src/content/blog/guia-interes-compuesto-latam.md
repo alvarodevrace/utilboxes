@@ -15,4 +15,4 @@ A diferencia del interés simple, donde los beneficios se calculan solo sobre el
 Para aprovechar el interés compuesto en nuestra región, la constancia es más importante que el monto inicial. Iniciar con pequeñas aportaciones mensuales en instrumentos que reinviertan utilidades permite que el tiempo trabaje a tu favor. La clave está en la reinversión automática y en evitar retirar los fondos antes de tiempo para no interrumpir el ciclo de crecimiento.
 
 ## Conclusión
-Planificar tu futuro financiero hoy es la mejor inversión que puedes hacer. Explora nuestras [herramientas gratuitas para LatAm](/) y diseña tu propio plan de ahorro global con cálculos claros.
+Planificar tu futuro financiero hoy es la mejor inversion que puedes hacer. Si quieres ver cuanto podria crecer tu capital en los proximos anos, usa nuestra [Calculadora de Interes Compuesto](/herramientas/calculadora-interes-compuesto) y disena tu propio plan de ahorro global.
