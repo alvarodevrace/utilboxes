@@ -9,7 +9,6 @@ const {
   showBottomAd = false,
 } = Astro.props;
 
-const plausibleSrc = 'https://analytics.utilboxes.org/js/script.js';
 const adsenseClient = 'ca-pub-4782913478347937';
 ---
 <!DOCTYPE html>
@@ -19,7 +18,14 @@ const adsenseClient = 'ca-pub-4782913478347937';
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <SEOMeta {title} {description} />
   <link rel="sitemap" href="/sitemap-index.xml" />
-  <script defer data-domain="utilboxes.org" src={plausibleSrc}></script>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9R880WHV1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N9R880WHV1');
+  </script>
   <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`} crossorigin="anonymous"></script>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen">
