@@ -1,0 +1,111 @@
+---
+import Layout from '../../components/Layout.astro';
+
+const title = 'Generador Link WhatsApp 2026 | UtilBoxes';
+const description = 'Generador link WhatsApp para crear wa.me con mensaje listo, vista previa y copia rapida en segundos.';
+---
+<Layout {title} {description}>
+  <section class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
+    <div>
+      <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-emerald-300">Ventas y soporte</p>
+      <h1 class="mb-4 text-4xl font-bold text-white">Generador de link para WhatsApp</h1>
+      <p class="mb-8 max-w-2xl text-zinc-400">Crea enlace directo `wa.me` con codigo de pais, numero limpio y mensaje prellenado para compartir por web, bio o anuncios.</p>
+      <div class="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="block text-sm text-zinc-300">
+            Pais o codigo
+            <select id="countryCode" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white">
+              <option value="593">Ecuador (+593)</option>
+              <option value="57">Colombia (+57)</option>
+              <option value="52">Mexico (+52)</option>
+              <option value="51">Peru (+51)</option>
+              <option value="56">Chile (+56)</option>
+              <option value="54">Argentina (+54)</option>
+              <option value="34">Espana (+34)</option>
+              <option value="">Personalizado</option>
+            </select>
+          </label>
+          <label class="block text-sm text-zinc-300">
+            Codigo manual
+            <input id="manualCode" type="text" inputmode="numeric" placeholder="593" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white" />
+          </label>
+          <label class="block text-sm text-zinc-300 sm:col-span-2">
+            Numero
+            <input id="phoneNumber" type="text" inputmode="numeric" placeholder="0991234567" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white" />
+          </label>
+          <label class="block text-sm text-zinc-300 sm:col-span-2">
+            Mensaje prellenado
+            <textarea id="message" rows="5" class="mt-2 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-3 text-white" placeholder="Hola, quiero cotizar servicio para mi negocio.">Hola, quiero cotizar servicio para mi negocio.</textarea>
+          </label>
+        </div>
+      </div>
+    </div>
+    <aside class="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
+      <h2 class="mb-4 text-lg font-semibold text-white">Resultado</h2>
+      <p class="mb-2 text-xs uppercase tracking-wide text-zinc-500">Link</p>
+      <p id="linkOutput" class="mb-4 break-all rounded-xl border border-zinc-800 bg-zinc-950 p-3 text-sm text-emerald-300"></p>
+      <div class="mb-4 flex flex-wrap gap-3">
+        <button id="copyButton" type="button" class="rounded-md bg-emerald-500 px-4 py-2 text-sm font-semibold text-zinc-950 transition hover:bg-emerald-400">Copiar</button>
+        <a id="openLink" href="#" target="_blank" rel="noreferrer" class="rounded-md border border-emerald-500/40 px-4 py-2 text-sm font-semibold text-emerald-300 transition hover:border-emerald-400 hover:text-white">Abrir</a>
+      </div>
+      <p class="mb-2 text-xs uppercase tracking-wide text-zinc-500">Vista previa</p>
+      <div class="rounded-xl border border-zinc-800 bg-zinc-950 p-4">
+        <p class="text-sm text-zinc-500">Numero limpio</p>
+        <p id="previewNumber" class="mt-1 font-semibold text-white">593</p>
+        <p class="mt-4 text-sm text-zinc-500">Mensaje</p>
+        <p id="previewMessage" class="mt-1 whitespace-pre-line text-zinc-300"></p>
+      </div>
+      <p id="copyStatus" class="mt-4 text-sm text-zinc-400">Listo para compartir.</p>
+    </aside>
+  </section>
+  <script>
+    const countryCode = document.querySelector('#countryCode');
+    const manualCode = document.querySelector('#manualCode');
+    const phoneNumber = document.querySelector('#phoneNumber');
+    const message = document.querySelector('#message');
+    const linkOutput = document.querySelector('#linkOutput');
+    const previewNumber = document.querySelector('#previewNumber');
+    const previewMessage = document.querySelector('#previewMessage');
+    const openLink = document.querySelector('#openLink');
+    const copyButton = document.querySelector('#copyButton');
+    const copyStatus = document.querySelector('#copyStatus');
+
+    function digitsOnly(value) {
+      return value.replace(/\D+/g, '');
+    }
+
+    function getCode() {
+      return digitsOnly(countryCode.value || manualCode.value);
+    }
+
+    function buildLink() {
+      const code = getCode();
+      const rawPhone = digitsOnly(phoneNumber.value);
+      const text = message.value.trim();
+      const fullPhone = `${code}${rawPhone}`;
+      const url = fullPhone ? `https://wa.me/${fullPhone}${text ? `?text=${encodeURIComponent(text)}` : ''}` : 'https://wa.me/';
+      linkOutput.textContent = url;
+      openLink.href = url;
+      previewNumber.textContent = fullPhone || 'Sin numero';
+      previewMessage.textContent = text || 'Sin mensaje';
+      copyStatus.textContent = 'Listo para compartir.';
+    }
+
+    countryCode.addEventListener('change', () => {
+      manualCode.value = countryCode.value || manualCode.value;
+      buildLink();
+    });
+    [manualCode, phoneNumber, message].forEach((element) => element.addEventListener('input', buildLink));
+    copyButton.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(linkOutput.textContent || '');
+        copyStatus.textContent = 'Link copiado.';
+      } catch {
+        copyStatus.textContent = 'No se pudo copiar. Copia manual.';
+      }
+    });
+
+    manualCode.value = countryCode.value;
+    buildLink();
+  </script>
+</Layout>
